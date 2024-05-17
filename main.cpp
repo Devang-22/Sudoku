@@ -50,4 +50,32 @@ void printBoard(int grid[N][N]) {
    }
 }
 
+bool solveSudoku(int board[N][N], int row, int col) {
+    // If all cells are filled, the puzzle is solved
+    if (row == N - 1 && col == N)
+        return true;
+
+    // Move to the next row if the current column is N
+    if (col == N) {
+        row++;
+        col = 0;
+    }
+
+    // Skip the cells that already have a value
+    if (board[row][col] != 0)
+        return solveSudoku(board, row, col + 1);
+
+    // Try filling the current cell with a number from 1 to 9
+    for (int num = 1; num <= 9; num++) {
+        if (isSafe(board, row, col, num)) {
+            board[row][col] = num;
+
+            if (solveSudoku(board, row, col + 1))
+                return true;
+
+            board[row][col] = 0;
+        }
+    }
+    return false;
+}
 
