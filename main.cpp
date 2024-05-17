@@ -87,3 +87,56 @@ bool isSolvedCompletely(int grid[N][N]){
 
     return true;
 }
+
+void playGame(int board[N][N]){
+    int ch;
+    int row, col, num;
+    while(true){
+        printBoard(board);
+        cout << endl << endl;
+        cout << "Unable to solve? Enter -1 as row, col and num to view the solved sudoku."<<endl;
+        cout << "Enter row: ";
+        cin >> row;
+        cout << "Enter column: ";
+        cin >> col;
+        cout << "Enter number: ";
+        cin >> num;
+
+        if(row == -1 || col == -1 || num == -1){
+            solveSudoku(board, 0, 0);
+            printBoard(board);
+            cout << endl;
+            cout << "Better luck next time!!!" << endl;
+            return;
+        }
+        if (isSolvedCompletely(board))
+            break;
+        row--;
+        col--;
+        if (!isSafe(board, row, col, num)) {
+            cout << "Invalid move. Try again." << endl;
+            continue;
+        }
+        board[row][col] = num;
+    }
+
+    // Check if the user has solved it correctly or not
+    bool solved = true;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (board[i][j] == 0) {
+                solved = false;
+                break;
+            }
+        }
+    }
+
+    if (solved) {
+        cout << "Congratulations! You have solved the puzzle." << endl;
+        printBoard(board);
+    }
+    else {
+        cout << "Puzzle not solved. Better luck next time." << endl;
+    }
+
+}
