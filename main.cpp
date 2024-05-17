@@ -79,3 +79,11 @@ bool solveSudoku(int board[N][N], int row, int col) {
     return false;
 }
 
+bool isSolvedCompletely(int grid[N][N]){
+    for (int row = 0; row < N; row++)
+        for (int col = 0; col < N; col++)
+            if (grid[row][col] == 0)
+                return false;
+
+    return true;
+}
